@@ -1,0 +1,173 @@
+<DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/styles.css" type="text/css" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet"> -->
+        <script src="https://kit.fontawesome.com/d6479d1ae3.js" crossorigin="anonymous"></script>
+        <script src="js/script.js" lang="javascript"></script>
+        <script src="https://kit.fontawesome.com/d6479d1ae3.js" crossorigin="anonymous"></script>
+        <script src="js/xlsx.full.min.js"></script>
+        <!-- <script lang="javascript" src="js/jquery-3.4.1.min.js"></script>         -->
+        <script lang="javascript" src="js/FileSaver.min.js"></script>
+        <title>FiCT</title>
+    </head>
+    <body>
+        <a href="html/register.html" target="_blank">Ir a otra pagina</a>
+        <button id="button-a">Create Excel</button>
+        
+        <div>
+            <table id="campos_y_horas" class="fichero"></table>
+        </div>
+        
+        <audio id="aud_timbre1">
+            <source src="audio/timbre.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="aud_timbre2">
+            <source src="audio/timbre2.mp3" type="audio/mpeg">
+        </audio>
+        <div id="overlay" class="overlay">
+            <div class="popup" id="popup">
+                <a class="cerrar_popup"><i class="icon_cerrar fas fa-times" id="cerrar_popup"></i></a>
+                <fieldset id="form_registro">
+                    <legend id="titulo_registro"></legend>
+                    <form>
+                        <div class="inputs_registro">
+                            <div id="modalidad" class="modalidad">
+                                <div id="cont_modalidad" class="cont_modalidad">
+                                    <div id="sencillo" class="sencillo">
+                                        <h2 class="sencillos">Sencillos</h2>
+                                        <img src="svg/singles.svg" alt="singles.svg" title="Sencillos" onclick="inputSingles()" class="sencillos">
+                                    </div>
+                                    <div id="dobles" class="dobles">
+                                        <h2 class="dobles">Dobles</h2>
+                                        <img src="svg/doubles.svg" alt="doubles.svg" title="Dobles" onclick="inputDoubles()" class="dobles">
+                                    </div>
+                                </div>
+                                <div id="input_modalidad" class="input_modalidad">
+                                    <div id="select_sencillo" class="select_modalidad">
+                                        <div id="usuario_1" class="cont_select">
+                                            <select id="select_usuario_1" class="select_usuario">
+                                                <option value="inicial" selected>Seleccione uno</option>
+                                                <option value="miembro">Miembro</option>
+                                                <option value="invitado">Invitado</option>
+                                                <option value="profesor">Profesor</option>
+                                                <option value="monitor">Monitor</option>
+                                            </select>
+                                            <div id="cont_inputs_1" class="cont_inputs">
+
+                                            </div>
+                                            <div id="select_monitor_1" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_monitor_1" class="rh inner_monitor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_monitor_1" class="contenedor_opciones_rh"></div>
+                                            <div id="select_profesor_1" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_profesor_1" class="rh inner_profesor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_profesor_1" class="contenedor_opciones_rh"></div>
+                                        </div>
+                                        <div id="usuario_2" class="cont_select">
+                                            <select id="select_usuario_2" class="select_usuario">
+                                                <option value="inicial" selected>Seleccione uno</option>
+                                                <option value="miembro">Miembro</option>
+                                                <option value="invitado">Invitado</option>
+                                                <option value="profesor">Profesor</option>
+                                                <option value="monitor">Monitor</option>
+                                            </select>
+                                            <div id="cont_inputs_2" class="cont_inputs">
+
+                                            </div>
+                                            <div id="select_monitor_2" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_monitor_2" class="rh inner_monitor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_monitor_2" class="contenedor_opciones_rh"></div>
+                                            <div id="select_profesor_2" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_profesor_2" class="rh inner_profesor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_profesor_2" class="contenedor_opciones_rh"></div>
+                                        </div>
+                                    </div>
+                                    <div id="select_doble" class="select_modalidad">
+                                        <div id="usuario_3" class="cont_select">
+                                            <select id="select_usuario_3" class="select_usuario">
+                                                <option value="inicial" selected>Seleccione uno</option>
+                                                <option value="miembro">Miembro</option>
+                                                <option value="invitado">Invitado</option>
+                                                <option value="profesor">Profesor</option>
+                                                <option value="monitor">Monitor</option>
+                                            </select>
+                                            <div id="cont_inputs_3" class="cont_inputs">
+
+                                            </div>
+                                            <div id="select_monitor_3" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_monitor_3" class="rh inner_monitor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_monitor_3" class="contenedor_opciones_rh"></div>
+                                            <div id="select_profesor_3" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_profesor_3" class="rh inner_profesor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_profesor_3" class="contenedor_opciones_rh"></div>
+                                        </div>
+                                        <div id="usuario_4" class="cont_select">
+                                            <select id="select_usuario_4" class="select_usuario">
+                                                <option value="inicial" selected>Seleccione uno</option>
+                                                <option value="miembro">Miembro</option>
+                                                <option value="invitado">Invitado</option>
+                                                <option value="profesor">Profesor</option>
+                                                <option value="monitor">Monitor</option>
+                                            </select>
+                                            <div id="cont_inputs_4" class="cont_inputs">
+
+                                            </div>
+                                            <div id="select_monitor_4" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_monitor_4" class="rh inner_monitor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_monitor_4" class="contenedor_opciones_rh"></div>
+                                            <div id="select_profesor_4" class="select_rh" onclick="desplegarOpciones(this)">
+                                                <div id="inner_profesor_4" class="rh inner_profesor">
+                                                    
+                                                </div>
+                                                <div class="icono_rh"><i class="fas fa-sort-down"></i></div>
+                                            </div>
+                                            <div id="opciones_profesor_4" class="contenedor_opciones_rh"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn">
+                            <a><div id="guardar_registro" class="btn_registro" onclick="guardarRegistro()">Guardar</div></a>
+                            <a><div id="cancelar_registro" class="btn_registro">Cancelar</div></a>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+        
+    </body>
+    <footer>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>    </footer>
+</html>
