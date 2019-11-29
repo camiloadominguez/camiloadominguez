@@ -5,8 +5,7 @@ const con = console.log;
 let fechaExcel = new Date();
 let day, month,year, ConverToXlsx, wbout, libroDeTrabajo;
 let arrIds = [];
-let divs = "";
-let filas, contadorHoras, z = 0;;
+let filas, contadorHoras, z = 0;
 let fecha, hour, minute, second, audio;
 let ident, clase, filHora, colCampo, campoMini, anchoP, anchoM, horaTurno;
 let HTMLProfesor, HTMLMonitor, HTMLInputs;
@@ -20,6 +19,7 @@ let arrProfesores = new Array(4);
 let arrMonitores = new Array(4);
 datosTurno = [];
 prueba=[];
+arrTurnos=[];
 idT = cp = hr = s1 = ac1 = s2 = ac2 = s3 = ac3 = s4 = ac4 = i1 = ai1 = i2 = ai2 = i3 = ai3 = i4 = ai4 = p1 = p2 = p3 = p4 = m1 = m2 = m3 = m4 = idC ='';
 encabezadoExcel = ['campo','hora','miembro_1', 'miembro_2','miembro_3','miembro_4','invitado_1', 'invitado_2','invitado_3','invitado_4','profesor_1', 'profesor_2','profesor_3','profesor_4','monitor_1', 'monitor_2','monitor_3','monitor_4','accion'];
 contExcel=[];
@@ -41,10 +41,6 @@ let monitores = [], profesores = [];
 ]
 
 document.addEventListener("DOMContentLoaded", function event() {
-
-   
-
-
 
     HTMLProfesor =  '<img src="svg/user_1.svg" alt="user_1.svg" class="img_user">'+
                     '<h3>Profesor</h3>';
@@ -94,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function event() {
             }
         }
         id_DOM('fil_0_col_0').innerHTML="Hora/Campo";
-        divs = document.getElementsByTagName("div");
+        // divs = document.getElementsByTagName("div");
     }
     id_DOM('select_usuario_1').addEventListener('change', (event) => {
         valor = id_DOM('select_usuario_1').value;
@@ -115,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function event() {
     crearTabla();
     HTMLPyM();
     recorrerJson();
+    if(localStorage.getItem('turnos')){
+        getTurnos();
+    }
 
     document.addEventListener('mousedown', function (e) {
         ident = e.target.id;
@@ -489,10 +488,10 @@ function guardarRegistro(){
         arrInvitados = new Array(8);
         arrProfesores = new Array(4);
         arrMonitores = new Array(4);
-        imprimirTurnos(nuevoTurno);
+        imprimirTurnos(listadoTurnos, listadoTurnos.length-1);
         contExcel=[];
         idTurno++;
-        
+        localStorage.setItem('turnos',JSON.stringify(listadoTurnos))
         cerrarTodo();
         // imprimir en pantalla
 
@@ -500,6 +499,10 @@ function guardarRegistro(){
 }
 // *********IMPORTANTE 
 // +++++++Constructor del turno
+function getTurnos(){
+    listadoTurnos = JSON.parse(localStorage.getItem('turnos'));
+    imprimirTurnos(listadoTurnos,0);
+}
 
 function turno(cE)
 {
@@ -532,80 +535,87 @@ function turno(cE)
     this.monitor_4 = cE[26];
     this.id_casilla= cE[27];
 }
-function imprimirTurnos(nuevoTruno){
-    if(nuevoTruno.miembro_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.miembro_1+'\n ';
-    }
-    if(nuevoTruno.accion_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accion_1+'\n ';
-    }
-    if(nuevoTruno.miembro_2!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.miembro_2+'\n ';
-    }
-    if(nuevoTruno.accion_2!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accion_2+'\n ';
-    }
-    if(nuevoTruno.miembro_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.miembro_3+'\n ';
-    }
-    if(nuevoTruno.accion_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accion_3+'\n ';
-    }
-    if(nuevoTruno.miembro_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.miembro_4+'\n ';
-    }
-    if(nuevoTruno.accion_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accion_4+'\n ';
-    }
-    if(nuevoTruno.invitado_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.invitado_1+'\n ';
-    }
-    if(nuevoTruno.accionInv_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accionInv_1+'\n ';
-    }
-    if(nuevoTruno.invitado_2!=undefined) {
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.invitado_2+'\n ';
-    }
-    if(nuevoTruno.accionInv_2!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accionInv_2+'\n ';
-    }
-    if(nuevoTruno.invitado_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.invitado_3+'\n ';
-    }
-    if(nuevoTruno.accionInv_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accionInv_3+'\n ';
-    }
-    if(nuevoTruno.invitado_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.invitado_4+'\n ';
-    }
-    if(nuevoTruno.accionInv_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.accionInv_4+'\n ';
-    }
-    if(nuevoTruno.profesor_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.profesor_1+'\n ';
-    }
-    if(nuevoTruno.profesor_2!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.profesor_2+'\n ';
-    }
-    if(nuevoTruno.profesor_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.profesor_3+'\n ';
-    }
-    if(nuevoTruno.profesor_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.profesor_4+'\n ';
-    }
-    if(nuevoTruno.monitor_1!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.monitor_1+'\n ';
-    }
-    if(nuevoTruno.monitor_2!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.monitor_2+'\n ';
-    }
-    if(nuevoTruno.monitor_3!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.monitor_3+'\n ';
-    }
-    if(nuevoTruno.monitor_4!=undefined){
-        id_DOM(nuevoTruno.id_casilla).title += nuevoTruno.monitor_4+'\n ';
-    }
-    if(nuevoTruno.id_casilla!=undefined){ 
-        id_DOM(nuevoTruno.id_casilla).innerHTML += nuevoTruno.accion_1;
+function imprimirTurnos(nuevoTurno,ind){
+    for(let i=ind;i<listadoTurnos.length;i++){
+        if(nuevoTurno[i].miembro_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].miembro_1+'\n ';
+        }
+        if(nuevoTurno[i].accion_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accion_1+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accion_1+'</br>';
+        }
+        if(nuevoTurno[i].miembro_2!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].miembro_2+'\n ';
+        }
+        if(nuevoTurno[i].accion_2!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accion_2+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accion_2+'</br>';
+        }
+        if(nuevoTurno[i].miembro_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].miembro_3+'\n ';
+        }
+        if(nuevoTurno[i].accion_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accion_3+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accion_3+'</br>';
+        }
+        if(nuevoTurno[i].miembro_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].miembro_4+'\n ';
+        }
+        if(nuevoTurno[i].accion_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accion_4+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accion_4+'</br>';
+        }
+        if(nuevoTurno[i].invitado_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].invitado_1+'\n ';
+        }
+        if(nuevoTurno[i].accionInv_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accionInv_1+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accionInv_1+'</br>';
+        }
+        if(nuevoTurno[i].invitado_2!=undefined) {
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].invitado_2+'\n ';
+        }
+        if(nuevoTurno[i].accionInv_2!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accionInv_2+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accionInv_2+'</br>';
+        }
+        if(nuevoTurno[i].invitado_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].invitado_3+'\n ';
+        }
+        if(nuevoTurno[i].accionInv_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accionInv_3+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accionInv_3+'</br>';
+        }
+        if(nuevoTurno[i].invitado_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].invitado_4+'\n ';
+        }
+        if(nuevoTurno[i].accionInv_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].accionInv_4+'\n ';
+            id_DOM(nuevoTurno[i].id_casilla).innerHTML += nuevoTurno[i].accionInv_4+'</br>';
+        }
+        if(nuevoTurno[i].profesor_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].profesor_1+'\n ';
+        }
+        if(nuevoTurno[i].profesor_2!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].profesor_2+'\n ';
+        }
+        if(nuevoTurno[i].profesor_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].profesor_3+'\n ';
+        }
+        if(nuevoTurno[i].profesor_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].profesor_4+'\n ';
+        }
+        if(nuevoTurno[i].monitor_1!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].monitor_1+'\n ';
+        }
+        if(nuevoTurno[i].monitor_2!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].monitor_2+'\n ';
+        }
+        if(nuevoTurno[i].monitor_3!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].monitor_3+'\n ';
+        }
+        if(nuevoTurno[i].monitor_4!=undefined){
+            id_DOM(nuevoTurno[i].id_casilla).title += nuevoTurno[i].monitor_4+'\n ';
+        }
     }
 }
